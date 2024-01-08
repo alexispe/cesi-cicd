@@ -6,10 +6,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: ls -lah
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-      - run: npm install
+      - run: npm ci
       - run: npm run build
-      - run: ls -lah
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm run e2e:headless
