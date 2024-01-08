@@ -10,7 +10,9 @@ jobs:
       - run: npm run build
       - uses: actions/cache/save@v3
         with:
-          path: node_modules
+          path: |
+            ~/.cache/Cypress
+            node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
 
   test:
@@ -18,9 +20,16 @@ jobs:
     needs: [build]
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/cache/restore@v3
+        with:
+          path: |
+            ~/.cache/Cypress
+            node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
+          install: false
           build: npm run build
           start: npm run start
           browser: chrome
