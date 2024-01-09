@@ -2,6 +2,23 @@ name: CICD
 on: [push]
 
 jobs:
+  build-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: ghcr.io/${{ github.actor }}/next-image:latest
+          target: next
+
   # build:
   #   runs-on: ubuntu-latest
   #   steps:
@@ -43,17 +60,17 @@ jobs:
   #         name: Cypress video ${{ matrix.browser }}
   #         path: cypress/videos/
 
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: webfactory/ssh-agent@v0.8.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_KEY }}
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: webfactory/ssh-agent@v0.8.0
+  #       with:
+  #         ssh-private-key: ${{ secrets.SSH_KEY }}
 
-      - run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "\
-          cd cesi-cicd && \
-          git pull && \
-          npm install && \
-          npm run build && \
-          pm2 restart npm"
+  #     - run: |
+  #         ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "\
+  #         cd cesi-cicd && \
+  #         git pull && \
+  #         npm install && \
+  #         npm run build && \
+  #         pm2 restart npm"

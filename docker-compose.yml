@@ -1,0 +1,10 @@
+services:
+  next:
+    build: 
+      context: .
+      target: next
+    ports:
+      - "3000:3000"
+    command: npm run dev
+    volumes:
+      - ".:/app"
