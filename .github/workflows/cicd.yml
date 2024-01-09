@@ -46,7 +46,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: webfactory/ssh-agent@v0.5.4
+      - uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: ${{ secrets.SSH_KEY }}
 
@@ -55,4 +55,5 @@ jobs:
           cd cesi-cicd && \
           git pull && \
           npm install && \
-          npm run build"
+          npm run build && \
+          pm2 restart npm"
