@@ -9,8 +9,8 @@ jobs:
   dependency-audit:
     runs-on: ubuntu-latest
     steps:
-	    - uses: actions/checkout@v4
-			- run: npm audit --audit-level=high
+      - uses: actions/checkout@v4
+      - run: npm audit --audit-level=high
 
   lint:
     name: lint
