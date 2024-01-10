@@ -13,7 +13,7 @@ jobs:
 			- run: npm audit --audit-level=high
 
   lint:
-    name: Lint
+    name: lint
     continue-on-error: true
     runs-on: ubuntu-latest
     permissions:
@@ -73,7 +73,7 @@ jobs:
           path: cypress/videos/
 
   deploy-production:
-    needs: [test, lint]
+    needs: [test]
     runs-on: ubuntu-latest
     if: github.ref_name == 'main' || github.ref_type == 'tag'
     environment:
@@ -100,7 +100,7 @@ jobs:
           target: next
 
   deploy-develop:
-    needs: [test, lint]
+    needs: [test]
     runs-on: ubuntu-latest
     if: github.ref_name == 'develop'
     environment:
