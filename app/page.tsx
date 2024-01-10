@@ -7,7 +7,7 @@ export default function Home() {
     <div className={styles.container}>
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Bonjour à <a href="https://nextjs.org">CESI!</a>
+          Bonjour 2 <a href="https://nextjs.org">CESI!</a>
         </h1>
 
         <p className={styles.description}>
