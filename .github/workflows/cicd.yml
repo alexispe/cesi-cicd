@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy-production:
-    needs: [test]
+    needs: [test, lint]
     runs-on: ubuntu-latest
     if: github.ref_name == 'main' || github.ref_type == 'tag'
     environment:
@@ -34,7 +34,7 @@ jobs:
           target: next
 
   deploy-develop:
-    needs: [test]
+    needs: [test, lint]
     runs-on: ubuntu-latest
     if: github.ref_name == 'develop'
     environment:
@@ -70,6 +70,23 @@ jobs:
   #         ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "\
   #         sudo docker compose -f docker-compose.prod.yml up -d --pull=always"
 
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      statuses: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Super-linter
+        uses: super-linter/super-linter@v5.7.2
+        env:
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build:
     runs-on: ubuntu-latest
