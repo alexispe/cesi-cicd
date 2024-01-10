@@ -9,6 +9,9 @@ jobs:
   deploy-production:
     runs-on: ubuntu-latest
     if: github.ref_name == 'main' || github.ref_type == 'tag'
+    environment:
+      name: production
+      url: http://51.44.0.177
     permissions:
       contents: read
       packages: write
@@ -32,6 +35,9 @@ jobs:
   deploy-develop:
     runs-on: ubuntu-latest
     if: github.ref_name == 'develop'
+    environment:
+      name: develop
+      url: http://51.44.0.177:3000
     permissions:
       contents: read
       packages: write
