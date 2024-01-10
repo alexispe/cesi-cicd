@@ -3,10 +3,11 @@ services:
     image: ghcr.io/alexispe/cesi-cicd/next-image:latest
     ports:
       - "80:3000"
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
 
   watchtower:
     image: containrrr/watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /root/.docker/config.json:/config.json
-    command: next --interval 30
+    command: --interval 30 --label-enable
