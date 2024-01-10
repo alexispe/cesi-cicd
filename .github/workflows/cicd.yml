@@ -6,6 +6,16 @@ on:
       - develop
 
 jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Audit URLs using Lighthouse
+        uses: treosh/lighthouse-ci-action@v10
+        with:
+          urls: |
+            http://51.44.0.177/
+
   dependency-audit:
     runs-on: ubuntu-latest
     steps:
