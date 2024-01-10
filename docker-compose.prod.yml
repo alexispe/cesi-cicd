@@ -1,5 +1,5 @@
 services:
   next:
-    image: ghcr.io/alexispe/next-image:latest
+    image: ghcr.io/alexispe/cesi-cicd/next-image:latest
     ports:
       - "80:3000"
